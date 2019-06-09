@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>流体式瀑布流</title>
+    <style>
+		*{margin:0;padding:0}
+        #wrap{width:100%;overflow:hidden;position:relative}
+		#wrap div{width:200px;position:absolute;border:1px solid #eee;padding:4px;}
+		#wrap div h3{font-size:35px;}
+		#wrap div img{width:100%;margin:10px 0;border:0}
+    </style>
+</head>
+<body>
+    <div id = "wrap"></div>
+	<script src = 'sport.js'> </script>
+    <script>
+		var box = document.getElementById('wrap');
+		cReate(box,71);
+		function cReate(box,num){
+			for(let i = 1;i <= num;i++){
+				var oDiv = document.createElement('div');
+				var hz3 = document.createElement('h3');
+				hz3.innerHTML = i + '瀑布流';
+				var img = document.createElement('img');
+				img.src = 'images/' + i + '.jpg';
+				var pbiaoq = document.createElement('p');
+				pbiaoq.innerHTML = '瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流瀑布流';
+				oDiv.appendChild(hz3);
+				oDiv.appendChild(img);
+				oDiv.appendChild(pbiaoq);
+				box.appendChild(oDiv);
+			}
+		}
+		
+		class Xiaoguo{
+			constructor(box){
+				this.box = box;
+				//获取所有的子元素
+				this.childs = this.box.children;
+				console.log(this.box.children[0]);
+				this.waterFall(this.box);
+				window.onresize=function(){
+					this.waterFall(this.box);
+				}.bind(this)
+			}
+			
+			//排列
+			waterFall(obj,space){
+				if(!obj){
+					return;
+				}
+				this.space = space || 10;
+				this.num = this.childs.length;  //子节点个数
+				this.boxWid = this.box.offsetWidth; //大盒子宽度
+				this.divWid = this.childs[0].offsetWidth;  //小盒子宽度
+				this.col = Math.floor(this.boxWid / this.divWid); //列数
+				this.mat = Math.floor(this.boxWid % this.divWid / (this.col + 1));  //间距
+				//初始化第一行坐标
+				this.arr = [];
+				for(let i = 0; i < this.col; i ++){
+					var obj = {};
+					obj.left = i * this.divWid + this.mat * (i + 1);
+					obj.top = this.space;
+					this.arr.push(obj);
+				}
+				//对号入座
+				for(let i = 0; i < this.num; i ++){
+					this.childs[i].style.position = 'absolute';
+					let index = this.minHe(this.arr).min;
+					let ind = this.minHe(this.arr).max;
+					sport(this.childs[i],{left : this.arr[index].left, top : this.arr[index].top});
+					
+					this.arr[index].top += this.space + this.childs[i].offsetHeight ;
+					this.box.style.height = this.arr[index].top + 'px';
+				}
+				
+			}
+			//计算最小值
+			minHe(arr){
+				let index = 0;
+				let ind = 0;
+				let min = arr[0].top;
+				let max = arr[0].top;
+				for(let i = 0,len = arr.length;i < len;i ++){
+					if(min > arr[i].top){
+						min = arr[i].top;
+						index = i;
+					}
+					if(max < arr[0].top){
+						max = arr[i].top;
+						ind = i;
+					}
+				}
+				return {min : index,max : ind}
+			}
+		}
+		window.onload = function(){
+		new Xiaoguo(box);
+		}
+    </script>
+</body>
+</html>

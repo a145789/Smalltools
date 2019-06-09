@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+	<head>
+		<title>瀑布流</title>
+		<meta charset = "utf-8">
+		<style>
+			*{margin:0;padding:0}
+			ul,li{list-style:none}
+			ul{float:left;margin-right:15px;width:200px}
+			li{width:100%}
+			img{width:100%;}
+		</style>
+	</head>
+	<body>
+		<ul></ul>
+		<ul></ul>
+		<ul></ul>
+	<script>
+		window.onload = function(){
+			var uls = document.getElementsByTagName('ul');
+			function minHe(arr){
+				let index = 0;
+				let min = arr[0].offsetHeight;
+				for(let i = 0,len = arr.length;i < len;i ++){
+					if(min > arr[i].offsetHeight){
+						min = arr[i].offsetHeight;
+						index = i;
+					}
+				}
+				return index;
+			}
+			function addli(arr){
+				for(let i = 0;i <= 31;i ++){
+					var lis = document.createElement('li');
+					var img = document.createElement('img');
+					img.src = i + '.jpg';
+					if(i == 4){
+						img.src = i + '.jpeg'
+					}
+					if(i == 8){
+						img.src = i +'.png';
+					}
+					lis.appendChild(img);
+					arr[minHe(arr)].appendChild(lis);
+				}
+			}
+			addli(uls);
+			let ceheight = document.documentElement.clientHeight;
+			console.log(ceheight);
+			window.onscroll = function (){
+				let scroll = document.documentElement.scrollTop;
+				if(ceheight + scroll >= document.body.scrollHeight){
+					addli(uls);
+				}
+			}
+		}
+	</script>
+	</body>
+</html>

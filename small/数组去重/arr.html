@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = [6,5,6,8,8,8,7,7,7,6,3,2,2,1,2,5,8,'a','b','a'];
+        // for(var i = 0; i < a.length;i ++){
+        //     for(var e = i + 1; e < a.length; e++){
+        //         if(a[i] == a[e]){
+        //             console.log(i + ':' + e + ':' + a.splice(e,1));
+        //             e = e-1;
+        //             console.log(a);
+        //         }
+        //     }
+        // }
+        // console.log(a);
+        console.log(...new Set(a));
+        a.sort(function(a,b){return b - a});
+        console.log(a);
+    </script>
+</body>
+</html>

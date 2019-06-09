@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style>
+        #a1{width:100px;height:100px;background:red;position:absolute;left:300px;}
+        #a2{width:100px;height:100px;background:blue;position:absolute;left:150px;}
+    </style>
+</head>
+<body>
+    <div id = "a1"></div>
+	<div id = "a2"></div>
+	<button id = 'a3'>返回</button>
+	<script src = 'drag.js'> </script>
+    <script>
+		var a = document.getElementById('a1');
+		var b = document.getElementById('a2');
+		var c = document.getElementById('a3');
+		var a1 = new Drag(a,document);
+		c.onclick = function(){
+			console.log(a1.arr);
+		}
+    </script>
+</body>
+</html>
